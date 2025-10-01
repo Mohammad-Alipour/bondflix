@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Mohammad-Alipour/bondflix/internal/ws"
+	"github.com/Mohammad-Alipour/bondflix/backend/internal/ws"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 )
