@@ -1,14 +1,14 @@
-module bondflix
+module bondflix/backend
+
 
 go 1.24.6
 
 require (
 	github.com/gin-gonic/gin v1.11.0
-	github.com/gorilla/websocket v1.5.3
+	github.com/gorilla/websocket v1.5.1
 )
 
 require (
-	github.com/Mohammad-Alipour/bondflix/backend v0.0.0-20251001232420-cf7d79fa70a2
 	github.com/bytedance/sonic v1.14.0 // indirect
 	github.com/bytedance/sonic/loader v0.3.0 // indirect
 	github.com/cloudwego/base64x v0.1.6 // indirect

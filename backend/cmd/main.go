@@ -1,39 +1,24 @@
 package main
 
 import (
-	"log"
 	"net/http"
 
-	"github.com/Mohammad-Alipour/bondflix/backend/internal/ws"
-	"github.com/gin-gonic/gin"
-	"github.com/gorilla/websocket"
-)
+	"bondflix/backend/pkg/ws"
 
-// s
-var upgrader = websocket.Upgrader{
-	CheckOrigin: func(r *http.Request) bool { return true },
-}
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
 	r := gin.Default()
-	hub := ws.NewHub()
-	go hub.Run()
 
+	// health check
 	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{"message": "pong"})
+		c.JSON(http.StatusOK, gin.H{"message": "pong"})
 	})
 
+	// WebSocket endpoint
 	r.GET("/ws", func(c *gin.Context) {
-		conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
-		if err != nil {
-			log.Println("Upgrade error:", err)
-			return
-		}
-		client := &ws.Client{Conn: conn, Send: make(chan []byte)}
-		hub.Register <- client
-
-		go client.ReadPump(hub)
-		go client.WritePump()
+		ws.ServeWs(c.Writer, c.Request)
 	})
 
 	r.Run(":8080")
